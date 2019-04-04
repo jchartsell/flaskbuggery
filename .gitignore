@@ -102,3 +102,7 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# pycharm and OS X crap
+.DS_Store
+.idea
