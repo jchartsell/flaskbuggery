@@ -1,23 +1,26 @@
 from flask import Flask
 from flask import request
+from flask import render_template
 
 app = Flask(__name__)
 
 
 @app.route('/')
-def index(default="foo"):
-    query = request.args.get('query', default)
-    return "Word to your mother, {}.".format(query)
+@app.route('/<who>')
+def index(who="foo"):
+    query = request.args.get('person', who)
+    return render_template("index.html", name=query)
 
 @app.route('/powerlevel/')
 @app.route('/powerlevel/<int:pl>')
-def power_level_over_9000(pl):
-    if pl > 9000:
-        return "It's over 9000!"
-    #elif pl == 'None':
-        #return "check PL at /powerlevel/(your PL here)"
+def power_level_over_9000(pl=None):
+    if type(pl) != int or pl == None:
+        over = "check integer as power level at /powerlevel/<integer>"
+    elif pl > 9000:
+        over = "It's over 9000!"
     else:
-        return "Nope."
+        over = "Nope."
+    return render_template("powerlevel.html", over=over)
 
 
 
